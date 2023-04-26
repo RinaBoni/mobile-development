@@ -1,43 +1,31 @@
 import 'package:flutter/material.dart';
 
+//с этой функции начинается выполнение приложения
 void main() {
-  runApp(const MyApp());
-}
+  //ф-я для создания графического интерфейса. прикрепляет определенный виджет к экрану
+  runApp(
+      //корневой виджет, который передается runApp
+      Align(
+        //выравнивание вложенных элементов по центу
+        alignment : Alignment.center,
+        //Свойство дочернего виджета child если берется один дочерний виджет
+        child:
+        //представление в виде колонки
+        Column(
+            //Свойство дочерних виджетов children, если они берут список виджетов (в колонку
+            children: const <Widget>[
+              Text('Привет Flutter!',
+                  textDirection: TextDirection.ltr),
+              Text('Ивт-20',
+                  textDirection: TextDirection.ltr),
+              Text('Борисова Екатерина',
+                  textDirection: TextDirection.ltr),
+            ],
 
-//наследуем все из StatelessWidget. нам нужно переопределить обстрактый метод build
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+          // выравнивание по горизонтали по центру
+          mainAxisAlignment: MainAxisAlignment.center,
+          ),
 
-  //переопределяем метод build
-  //возвращает один объект типа Widget и принимает параметр типа buildContext
-  @override
-  Widget build(BuildContext context) {
-    //возвращаем окно. в нем мы можем указать какие именно настройки, темы, виджеты и тд будут в окне
-    return MaterialApp(
-      //свойство, которое показывает что будет на главном экране
-      //чтобы выводить много объектов используем класс Scaffold. (в home обращаемся только к одному объекту, а внутри этого объекта к множесту разных других
-      home: Scaffold(
-        //шапка приложения
-        appBar: AppBar(
-          title: const Text('Введение в виджеты'),
-          centerTitle: true,
-          backgroundColor: Colors.deepPurple,
-        ),
-        //основное тело приложения, расположение по центу
-        body: Container(
-          color: Colors.deepOrange,
-          child: Text('привет flutter!'),
-          alignment: Alignment.center,
-        ),
-      ),
-    );
-
-  }
-
-
-
-
-
-
-
+      )
+  );
 }

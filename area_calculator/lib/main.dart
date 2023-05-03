@@ -1,112 +1,149 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+enum MeasurementUnitList {mm, cm, m}
 
-class MyApp extends StatelessWidget {
+class MyCalulateArea extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-      theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-    );
-  }
+  State<StatefulWidget> createState() => MyCalulateAreaState();
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+class MyCalulateAreaState extends State<MyCalulateArea> {
+  final _formKey = GlobalKey<FormState>();
+  double _width = 25;
+  double _height = 10;
+  double _area = 0;
+  MeasurementUnitList _measurementUnit = MeasurementUnitList.m;
 
-class _HomePageState extends State<HomePage> {
-  var _formKey = GlobalKey<FormState>();
-  var isLoading = false;
-
-  void _submit() {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
-      return;
+  String printMeasurment(MeasurementUnitList _measurementUnit){
+    try {
+      switch(_measurementUnit){
+        case MeasurementUnitList.mm:
+          return 'мм';
+        case MeasurementUnitList.m:
+          return 'м';
+        case MeasurementUnitList.cm:
+          return 'см';
+      }
+    }catch (Exc) {
+      print(Exc);
+      rethrow;
     }
-    _formKey.currentState!.save();
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Form Validation"),
-        leading: Icon(Icons.filter_vintage),
-      ),
-      //body
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        //form
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Text(
-                "Form-Validation In Flutter ",
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
-              //styling
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.1,
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'E-Mail'),
-                keyboardType: TextInputType.emailAddress,
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                validator: (value) {
-                  if (value!.isEmpty ||
-                      !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                          .hasMatch(value)) {
-                    return 'Enter a valid email!';
+    return Form(key: _formKey, child: Column(
+        children: [
+          Row(children: <Widget>[
+            Container(padding: EdgeInsets.all(10.0),child: Text('Выберите единицу измерения:')),
+            Expanded(child: Container(padding:EdgeInsets.all(10.0),child:
+            ListTile(
+              title: const Text('милиметры'),
+              leading: Radio<MeasurementUnitList>(
+                  value: MeasurementUnitList.mm,
+                  groupValue: _measurementUnit,
+                  onChanged: (MeasurementUnitList? value) {
+                    setState(() {
+                      _measurementUnit = value!;
+                    });
                   }
-                  return null;
-                },
               ),
-              //box styling
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.1,
-              ),
-              //text input
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                keyboardType: TextInputType.emailAddress,
-                onFieldSubmitted: (value) {},
-                obscureText: true,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Enter a valid password!';
+            ),
+            ),),
+            Expanded(child: Container(padding:EdgeInsets.all(10.0),child:
+            ListTile(
+              title: const Text('сантиметры'),
+              leading: Radio<MeasurementUnitList>(
+                  value: MeasurementUnitList.cm,
+                  groupValue: _measurementUnit,
+                  onChanged: (MeasurementUnitList? value) {
+                    setState(() {
+                      _measurementUnit = value!;
+                    });
                   }
-                  return null;
-                },
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.1,
+            ),
+            ),),
+            Expanded(child: Container(padding:EdgeInsets.all(10.0),child:
+            ListTile(
+              title: const Text('метры'),
+              leading: Radio<MeasurementUnitList>(
+                  value: MeasurementUnitList.m,
+                  groupValue: _measurementUnit,
+                  onChanged: (MeasurementUnitList? value) {
+                    setState(() {
+                      _measurementUnit = value!;
+                    });
+                  }
               ),
-              ElevatedButton(
-
-                // padding: EdgeInsets.symmetric(
-                //   vertical: 10.0,
-                //   horizontal: 15.0,
-                // ),
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                    fontSize: 24.0,
-                  ),
-                ),
-                onPressed: () => _submit(),
-              )
-            ],
+            ),
+            ),),
+          ],
           ),
-        ),
-      ),
-    );
+
+
+          Row(children: <Widget>[
+            Container(padding:EdgeInsets.all(10.0),child: Text('Ширина:')),
+            Expanded(child: Container(padding:EdgeInsets.all(10.0),child:
+            TextFormField(initialValue: '$_width',validator: (value){
+              if (value!.isEmpty) return 'Задайте ширину';
+
+              try {
+                _width = double.parse(value);
+              } catch(e) {
+                _width = 0;
+                return e.toString();
+              }
+            })
+            )),
+          ]
+          ),
+
+          //создаем контейнер для визуального разделения виджетов между собой по вертикали
+          SizedBox(height: 10.0),
+
+          Row(children: <Widget>[
+            Container(padding:EdgeInsets.all(10.0),child: Text('Высота:')),
+            Expanded(child: Container(padding:EdgeInsets.all(10.0),child:
+            TextFormField(initialValue: '$_height',validator: (value){
+              if (value!.isEmpty) return 'Задайте высоту';
+
+              try {
+                _height = double.parse(value);
+              } catch(e) {
+                _height = 0;
+                return e.toString();
+              }
+            })
+            )),
+          ]
+          ),
+
+          SizedBox(height: 10.0),
+
+          ElevatedButton(onPressed: (){
+            if(_formKey.currentState!.validate()) {
+              setState(() {
+                if (_width is double && _height is double) _area = _width * _height;
+              });
+            }
+          }, child: Text('Вычислить'), ),
+
+          SizedBox(height: 50.0),
+
+          Text(_area == null ? 'задайте параметры' : 'S = $_width * $_height = ${_area} ${printMeasurment(_measurementUnit)}', style: TextStyle(fontSize: 30.0),)
+        ]
+    ));
   }
 }
+
+void main() => runApp(
+    MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(title: Text('Калькулятор площади')),
+            body: MyCalulateArea()
+        )
+    )
+);

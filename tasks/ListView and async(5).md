@@ -258,7 +258,7 @@ await new Future.delayed(const Duration(milliseconds: 100));
 
 Асинхронные методы занимают важное место в Dart и Flutter, в следующем уроке мы рассмотрим http запросы.
   
-![7](https://user-images.githubusercontent.com/83748388/234249316-d84261bf-67d0-4ff3-a446-80815d43047d.png)
+![7](https://flutter.su/data/61ed3556b4802dd06296c383031ddbdf.gif?w=350)
 
 
   

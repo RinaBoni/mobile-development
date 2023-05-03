@@ -3,15 +3,15 @@
 Flutter и то и другое – виджеты. Для переключения между окнами или 
 виджетами нужно использовать `Navigator`.
 
-`Navigator` – виджет-класс, позволяющий управлять стеком дочерних 
+**`Navigator`** – виджет-класс, позволяющий управлять стеком дочерних 
 виджетов, т.е. открывать, закрывать и переключать окна или страницы. Когда 
 мы используем `MaterialApp`, то экземпляр класса `Navigator` уже создан, и его 
 не надо объявлять с помощью слова new.
 
 А можно просто вызывать методы, для управления стеком виджетов:
-* Navigator.push;
-* Navigator.pushNamed;
-* Navigator.pop;
+* `Navigator.push`;
+* `Navigator.pushNamed`;
+* `Navigator.pop`;
 * и другие.
 
 ## 1. Открытие нового окна и возврат к предыдущему
@@ -40,11 +40,11 @@ SecondScreen()));
 Navigator.pop(context);
 ```
 
-![1](https://user-images.githubusercontent.com/83748388/234247221-2976caff-8612-46c4-a460-8619175a9a0b.png)
+![1](https://flutter.su/data/f0dc10d8c1f65f6fdcb5806a9cda0216.gif?w=200)
 
 В виджете `AppBar` кнопка возврата добавляется автоматически при использовании `Navigator.push`, так же автоматически обрабатывается событие системной кнопки «Назад» (Back).
 
-Листинг кода примера из двух окон
+##### Листинг кода примера из двух окон
 ```
 import 'package:flutter/material.dart';
 
@@ -109,7 +109,7 @@ Navigator.pushNamed(context, '/second');
 ```
 Для возвращения ничего менять в коде не надо, оставляем `Navigator.pop(context);`
 
-Листинг кода, пример с маршрутами:
+##### Листинг кода, пример с маршрутами:
 
 ```
 import 'package:flutter/material.dart';
@@ -176,9 +176,9 @@ onGenerateRoute: (routeSettings){
 
 Маршрут `'/second'` в параметре `routes` можно было бы убрать, нужно только правильно написать исключение на отсутствие параметра `path[2]`. Но в нашем примере мы оставим его.
 
-![2](https://user-images.githubusercontent.com/83748388/234247371-4d26732d-4a6d-4225-b105-4d0cb37e9180.png)
+![2](https://flutter.su/data/52590034b13cb926103f2069d484ccc0.gif?w=200)
 
-Листинг кода, пример с передачей параметров в маршруте:
+##### Листинг кода, пример с передачей параметров в маршруте:
 
 ```
 import 'package:flutter/material.dart';
@@ -238,9 +238,9 @@ void main() {
 
 Создадим диалоговое окно с помощью виджет-класса `PageRouteBuilder` и параметром `opaque: false`.
 
-![3](https://user-images.githubusercontent.com/83748388/234247542-138a4fa0-960e-4d0f-a196-248c0fea2bfe.png)
+![34368f6d7146cd08787f624f11221c4e](https://flutter.su/data/34368f6d7146cd08787f624f11221c4e.gif?w=200)
 
-Листинг кода, открытия диалогового окна:
+##### Листинг кода, открытия диалогового окна:
 
 ```
 import 'package:flutter/material.dart';
@@ -324,7 +324,7 @@ Navigator.push(context, PageRouteBuilder(
 ));
 ```
 
-![4](https://user-images.githubusercontent.com/83748388/234247650-a3e9d866-5bb0-4d01-a58d-d68017a1df0a.png)
+![4](https://flutter.su/data/0ff36aa2aa454dee9eb01514afdde3b1.gif?w=200)
 
 ## 6. Возвращаемое значение из диалогового окна
 
@@ -339,6 +339,60 @@ RaisedButton(onPressed: () async {
 bool value = await Navigator.push(context, PageRouteBuilder(
 ```
 
-![5](https://user-images.githubusercontent.com/83748388/234247773-55e56ab7-47dd-4d44-aa8e-1cb424682b57.png)
+![5](https://flutter.su/data/4e6bd48adfceb9bd2d27a3f473dee26f.gif?w=200)
 
+## Полный листинг кода
 
+```
+import 'package:flutter/material.dart';
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(title: Text('Больше или меньше')),
+      body: Center(child: Column(children: [
+        RaisedButton(onPressed: () async {
+          bool value = await Navigator.push(context, PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => MyPopup(),
+              transitionsBuilder: (___, Animation<double> animation, ____, Widget child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: ScaleTransition(scale: animation, child: child),
+                );
+              }
+          ));
+
+          if (value) _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Больше'), backgroundColor: Colors.green,));// TRUE
+          else _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Меньше'), backgroundColor: Colors.red,));// FALSE
+          }, child: Text('Загадать число')),
+      ],)),
+    );
+  }
+}
+
+class MyPopup extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Ваш ответ:'),
+      actions: [
+        FlatButton(
+          onPressed: () {Navigator.pop(context,true);},
+          child: Text('Больше'),
+        ),
+        FlatButton(
+          onPressed: () {Navigator.pop(context,false);},
+          child: Text('Меньше'),
+        ),
+      ],
+    );
+  }
+}
+
+void main() {runApp(MaterialApp(home: MainScreen()));}
+```

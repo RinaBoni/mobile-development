@@ -22,13 +22,15 @@
 
 Вам необходимо реализовать приложение по заданию согласно рисунку 1.
 
-![image](https://github.com/RinaBoni/mobile-development-6/assets/83748388/dcf8b7f7-7e7d-41dc-beb1-d2a3d3ec9b8a)
+![image](https://github.com/RinaBoni/mobile-development-6/assets/83748388/2620129e-cab4-4e8a-8039-89e56f9577f2)
 
 Рисунок 1 – Дизайн приложения.
 Пояснения к заданию:
 
-1. Вам необходимо стилизовать ваш дизайн. Идеи можете взять отсюда https://vc.ru/design/328418-top-10-idey-ui-dizayna-mobilnyh-prilozheniy-v-2022
-https://www.uprock.ru/articles/33-resursa-s-luchshimi-ui-patternami-dlyavashih-proektov
+1. Вам необходимо стилизовать ваш дизайн. Идеи можете взять отсюда
+    * https://vc.ru/design/328418-top-10-idey-ui-dizayna-mobilnyh-prilozheniy-v-2022
+
+    * https://www.uprock.ru/articles/33-resursa-s-luchshimi-ui-patternami-dlya-vashih-proektov
 
 2. Все формы должны иметь валидацию( Поля не должны быть пустыми не должно быть пустым, E-mail должен быть e-mailом, пароль не менее 8 символов с цифрами и буквами нижнего и верхнего регистра, формы – в этом вам помогут регулярные выражения). На схеме это прямоугольники зеленого цвета.
 

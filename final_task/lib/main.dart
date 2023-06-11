@@ -1,30 +1,54 @@
-import 'package:final_task/theme/theme_constants.dart';
-import 'package:final_task/theme/theme_manager.dart';
+import 'package:final_task/theme/my_theme.dart';
 import 'package:flutter/material.dart';
-import './signin.dart';
-import './signup.dart';
-import './home_screen.dart';
-import './NavBar.dart';
-import './theme/theme_constants.dart';
+import 'package:final_task/screens/login_form.dart';
+import 'package:final_task/screens/signup_form.dart';
+import 'package:final_task/screens/profile.dart';
+import 'package:final_task/screens/home_screen.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-//ThemeManager _themeManager = ThemeManager();
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    initialRoute: '/',
+    routes: {
 
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      //theme: ThemeClass.darkTheme,
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomeScreen(),
-        '/login_form': (context) => LoginPage(),
-        '/registration': (context) => SignUpPage(),
-      },
-    );
-  }
+      '/': (BuildContext context) => Scaffold(
+        backgroundColor: Colors.blue, //MyTheme.colorDark,
+        body: LoginForm(),
+      ),
+
+
+
+      '/registration': (BuildContext context) => Scaffold(
+          backgroundColor: MyTheme.colorDark,
+          body: SignupForm()),
+
+
+
+      '/profile': (BuildContext context) => Scaffold(
+        backgroundColor: MyTheme.colorDark,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Profile', style: TextStyle(color: MyTheme.colorBrightPurple),),
+          backgroundColor: MyTheme.colorPurple,
+        ),
+        body: Profile()),
+
+
+      // '/data_from_iot': (BuildContext context) => Scaffold(
+      //     appBar: AppBar(title: const Text('Data from IOT')),
+      //     body: const DataFromIOT()),
+
+
+      '/home_screen': (BuildContext context) => Scaffold(
+          backgroundColor: MyTheme.colorDark,
+          body: HomeScreen()),
+    },
+  ));
 }
+
+
+
 

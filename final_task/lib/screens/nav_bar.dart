@@ -61,12 +61,13 @@ class NavBar extends StatelessWidget {
 
           const Divider(color: MyTheme.colorPurple, thickness: 2,),
 
-          const ListTile(
+           ListTile(
             leading: Icon(
               Icons.link,
               color: MyTheme.colorGreen,),
             title: Text('Data from IoT'),
             textColor: MyTheme.colorBrightPurple,
+            onTap: (){Navigator.pushNamed(context, '/data_from_iot');},
           ),
 
           const Divider(color: MyTheme.colorPurple, thickness: 2,),

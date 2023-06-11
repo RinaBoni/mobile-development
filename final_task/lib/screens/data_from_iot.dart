@@ -196,9 +196,7 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Random Number Graph'),
-      ),
+
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -218,7 +216,7 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
 
             ElevatedButton(
               onPressed:(){ getWebsiteData; },
-              child: Text(sales.number),
+              child: Text('ds'),
             ),
             SizedBox(height: 16.0),
             // Expanded(

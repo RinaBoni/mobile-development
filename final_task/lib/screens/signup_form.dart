@@ -29,11 +29,11 @@ class _SignupFormState extends State<SignupForm> {
   }
 
   // Insert a new journal to the database
-  Future<void> _addItem() async {
-    await SQLHelper.createItem(
-        _titleController.text, _descriptionController.text);
-    _refreshJournals();
-  }
+//   Future<void> _addItem() async {
+//     await SQLHelper.createItem(
+//         _titleController.text, _descriptionController.text);
+//     _refreshJournals();
+//   }
 
   signUp() async {
     String uid = _conUserId.text;

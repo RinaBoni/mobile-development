@@ -157,6 +157,7 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
 
 
   List<RandomNumber> randomNumbers = [];
+
   void initState(){
   super.initState();
   getWebsiteData();
@@ -169,8 +170,9 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
 
     final snumbers = html
         .querySelectorAll('#number > span')
-        .map((element) => element.innerHtml.trim())
-        .toString();
+        .map((element) => int.parse(element.innerHtml.trim()));
+        //.map((element) => element.innerHtml.trim())
+        //.toString();
     //int? numbers = int.parse(snumbers.trim(), radix: 10);
 
     // for (final number in numbers){
@@ -178,7 +180,7 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
     // }
     //var now = DateTime.now();
 
-
+    int numbers = 3;
     setState(() {
       data.add(TimeSeriesSales(DateTime.now(), snumbers));
       print(snumbers);
@@ -219,35 +221,36 @@ class _RandomNumberGraphState extends State<RandomNumberGraph> {
               child: Text('ds'),
             ),
             SizedBox(height: 16.0),
-            // Expanded(
-            //   child: charts.TimeSeriesChart(
-            //     [
-            //       charts.Series<TimeSeriesSales, DateTime>(
-            //         id: 'Random Number',
-            //         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-            //         domainFn: (TimeSeriesSales sales, _) => sales.time,
-            //         measureFn: (TimeSeriesSales sales, _) => sales.number,
-            //         data: data,
-            //       ),
-            //     ],
-            //     animate: true,
-            //     defaultRenderer: charts.LineRendererConfig(includePoints: true),
-            //     dateTimeFactory: const charts.LocalDateTimeFactory(),
-            //     primaryMeasureAxis: charts.NumericAxisSpec(
-            //       tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false),
-            //     ),
-            //   ),
-            // ),
+           /* Expanded(
+              child: charts.TimeSeriesChart(
+                [
+                  charts.Series<TimeSeriesSales, DateTime>(
+                    id: 'Random Number',
+                    colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+                    domainFn: (TimeSeriesSales sales, _) => sales.time,
+                    measureFn: (TimeSeriesSales sales, _) => sales.number,
+                    data: data,
+                  ),
+                ],
+                animate: true,
+                defaultRenderer: charts.LineRendererConfig(includePoints: true),
+                dateTimeFactory: const charts.LocalDateTimeFactory(),
+                primaryMeasureAxis: charts.NumericAxisSpec(
+                  tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false),
+                ),
+              ),
+            ),*/
           ],
         ),
       ),
     );
+    //The argument type 'Iterable<int>' can't be assigned to the parameter type 'int'.
   }
 }
 
 class TimeSeriesSales {
   final DateTime time;
-  final String number;
+  final Iterable<int> number;
 
   TimeSeriesSales(this.time, this.number);
 }

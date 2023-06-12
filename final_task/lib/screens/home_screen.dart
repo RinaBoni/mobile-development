@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/theme/my_theme.dart';
+import 'package:final_task/theme/my_theme.dart';
 
 
 import 'package:final_task/screens/nav_bar.dart';

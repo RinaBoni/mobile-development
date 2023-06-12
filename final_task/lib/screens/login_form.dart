@@ -5,6 +5,7 @@ import 'package:final_task/database_handler/db_helper.dart';
 import 'package:final_task/model/user_model.dart';
 import 'package:final_task/screens/signup_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 import 'package:final_task/theme/my_theme.dart';
 import 'profile.dart';
@@ -12,9 +13,19 @@ import 'profile.dart';
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
+  //ToastContext().init(context);
+}
+
+class ToastContext {
+  late BuildContext context;
+
+  void init(BuildContext appContext) {
+    context = appContext;
+  }
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final toastContext = ToastContext();
   Future<SharedPreferences> _pref = SharedPreferences.getInstance();
   final _formKey = new GlobalKey<FormState>();
 
@@ -26,31 +37,33 @@ class _LoginFormState extends State<LoginForm> {
   void initState() {
     super.initState();
     dbHelper = DbHelper();
+    toastContext.init(context);
   }
+
+  late bool ok;
 
   login() async {
     String uid = _conUserId.text;
     String passwd = _conPassword.text;
 
     if (uid.isEmpty) {
-      alertDialog(context, "Please Enter User ID");
+      // Toast.show("Toast plugin app", duration: Toast.lengthShort, gravity:  Toast.bottom);
+      alertDialog1("Please Enter User ID");
+      alertDialog1( "Please Enter User ID");
     } else if (passwd.isEmpty) {
-      alertDialog(context, "Please Enter Password");
+      alertDialog1( "Please Enter Password");
     } else {
       await dbHelper.getLoginUser(uid, passwd).then((userData) {
         if (userData != null) {
           setSP(userData).whenComplete(() {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (_) => Profile()),
-                    (Route<dynamic> route) => false);
+            Navigator.pushNamed(context, '/profile');
           });
         } else {
-          alertDialog(context, "Error: User Not Found");
+          alertDialog1( "Error: User Not Found");
         }
       }).catchError((error) {
         print(error);
-        alertDialog(context, "Error: Login Fail");
+        alertDialog1( "Error: Login Fail");
       });
     }
   }
@@ -58,8 +71,8 @@ class _LoginFormState extends State<LoginForm> {
   Future setSP(UserModel user) async {
     final SharedPreferences sp = await _pref;
 
-    sp.setString("login", user.login);
-    sp.setString("name", user.name);
+    sp.setString("user_id", user.user_id);
+    sp.setString("user_name", user.user_name);
     sp.setString("email", user.email);
     sp.setString("password", user.password);
   }
@@ -85,7 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: const FittedBox(
                       child: Text("Sign In",
                           style: TextStyle(
-                              color: MyTheme.colorBrightPurple,
+                              color: MyTheme.colorDarkerBrightPurple,
                               fontWeight: FontWeight.bold),
                           textScaleFactor: 3.0),
                     )),
@@ -138,7 +151,7 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     onPressed: (){
                       login();
-                      Navigator.pushNamed(context, '/home_screen');
+                      //Navigator.pushNamed(context, '/home_screen');
                     },
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:final_task/common/com_helper.dart';
 import 'package:final_task/common/getTextFromField.dart';
 import 'package:final_task/database_handler/db_helper.dart';
+import 'package:final_task/database_handler/sql_helper.dart';
 import 'package:final_task/model/user_model.dart';
 import 'package:final_task/screens/login_form.dart';
 import 'package:final_task/theme/my_theme.dart';
@@ -27,6 +28,13 @@ class _SignupFormState extends State<SignupForm> {
     dbHelper = DbHelper();
   }
 
+  // Insert a new journal to the database
+  Future<void> _addItem() async {
+    await SQLHelper.createItem(
+        _titleController.text, _descriptionController.text);
+    _refreshJournals();
+  }
+
   signUp() async {
     String uid = _conUserId.text;
     String uname = _conUserName.text;
@@ -36,22 +44,49 @@ class _SignupFormState extends State<SignupForm> {
 
     if (_formKey.currentState!.validate()) {
       if (passwd != cpasswd) {
-        alertDialog(context, 'Password Mismatch');
+        alertDialog1('Password Mismatch');
       } else {
         _formKey.currentState!.save();
 
         UserModel uModel = UserModel(uid, uname, email, passwd);
         await dbHelper.saveData(uModel).then((userData) {
-          alertDialog(context, "Successfully Saved");
+          alertDialog1("Successfully Saved");
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => LoginForm()));
+          Navigator.pushNamed(context, '/profile');
         }).catchError((error) {
           print(error);
-          alertDialog(context, "Error: Data Save Fail");
+          alertDialog1("Error: Data Save Fail");
         });
       }
     }
+    else{alertDialog1('не валидная');}
+  }
+
+  signUp2() async{
+    String uid = _conUserId.text;
+    String uname = _conUserName.text;
+    String email = _conEmail.text;
+    String passwd = _conPassword.text;
+    String cpasswd = _conCPassword.text;
+
+    if (_formKey.currentState!.validate()) {
+      if (passwd != cpasswd) {
+        alertDialog1('Password Mismatch');
+      } else {
+        _formKey.currentState!.save();
+
+        UserModel uModel = UserModel(uid, uname, email, passwd);
+        await dbHelper.saveData(uModel).then((userData) {
+          alertDialog1("Successfully Saved");
+
+          Navigator.pushNamed(context, '/profile');
+        }).catchError((error) {
+          print(error);
+          alertDialog1("Error: Data Save Fail");
+        });
+      }
+    }
+    else{alertDialog1('не валидная');}
   }
 
   @override
@@ -77,7 +112,7 @@ class _SignupFormState extends State<SignupForm> {
                       child: const FittedBox(
                         child: Text("Sign Up",
                             style: TextStyle(
-                                color: MyTheme.colorBrightPurple,
+                                color: MyTheme.colorDarkerBrightPurple,
                                 fontWeight: FontWeight.bold),
                             textScaleFactor: 3.0),
                       )),
@@ -163,8 +198,9 @@ class _SignupFormState extends State<SignupForm> {
                         'Signup', style: TextStyle(color: MyTheme.colorBrightPurple)
                       ),
                       onPressed:(){
-                        signUp;
-                        Navigator.pushNamed(context, '/home_screen');
+                        //alertDialog1('не валидная1');
+                        signUp();
+                        //Navigator.pushNamed(context, '/home_screen');
                       }
                     ),
                   ),
@@ -179,11 +215,7 @@ class _SignupFormState extends State<SignupForm> {
                           style: MyTheme.buttonStyleUsual1,
                           child: Text('Sign In', style: TextStyle(color: MyTheme.colorBrightPurple)),
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (_) => LoginForm()),
-                                  (Route<dynamic> route) => false,
-                            );
+                            Navigator.pushNamed(context, '/');
                           },
                         ),
                       ],

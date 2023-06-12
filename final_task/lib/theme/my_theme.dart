@@ -5,8 +5,10 @@ class MyTheme {
   static const Color colorDark = Color.fromARGB(255, 36, 36, 36);
   static const Color colorPurple = Color.fromARGB(255, 151, 115, 255);
   static const Color colorMediumPurple = Color.fromARGB(255, 208, 108, 255);
+  static const Color colorDarkPurple = Color.fromARGB(255, 52, 40, 79);
   static const Color colorGreen = Color.fromARGB(255, 115, 255, 151);
   static const Color colorBrightPurple = Color.fromARGB(255, 240, 231, 255);
+  static const Color colorDarkerBrightPurple = Color.fromARGB(255, 224, 206, 255);
 
   static ButtonStyle buttonStyleUsual1 = ButtonStyle(
       backgroundColor: const MaterialStatePropertyAll(MyTheme.colorPurple),

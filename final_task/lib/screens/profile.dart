@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:final_task/common/com_helper.dart';
 import 'package:final_task/common/getTextFromField.dart';
+
 import 'package:final_task/database_handler/db_helper.dart';
+import 'package:final_task/database_handler/sql_helper.dart';
 import 'package:final_task/model/user_model.dart';
+
 import 'package:final_task/screens/login_form.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:final_task/theme/my_theme.dart';
 
 class Profile extends StatefulWidget {
@@ -13,12 +18,25 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  List<Map<String, dynamic>> _journals = [];  //все пользователи
+  bool _isLoading = true;
+  // This function is used to fetch all data from the database
+  void _refreshJournals() async {
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _journals = data;
+      _isLoading = false;
+    });
+  }
+
+
+
   final _formKey = new GlobalKey<FormState>();
   Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   late DbHelper dbHelper;
-  final _conLogin = TextEditingController();
-  final _conDelLogin = TextEditingController();
+  final _conUserId = TextEditingController();
+  final _conDelUserId = TextEditingController();
   final _conUserName = TextEditingController();
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
@@ -27,6 +45,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     getUserData();
+    _refreshJournals(); // Loading the diary when the app starts
 
     dbHelper = DbHelper();
   }
@@ -35,16 +54,17 @@ class _ProfileState extends State<Profile> {
     final SharedPreferences sp = await _pref;
 
     setState(() {
-      _conLogin.text = sp.getString("login")!;
-      _conDelLogin.text = sp.getString("login")!;
-      _conUserName.text = sp.getString("name")!;
+      _conUserId.text = sp.getString("user_id")!;
+      _conDelUserId.text = sp.getString("user_id")!;
+      _conUserName.text = sp.getString("user_name")!;
       _conEmail.text = sp.getString("email")!;
       _conPassword.text = sp.getString("password")!;
+
     });
   }
 
   update() async {
-    String uid = _conLogin.text;
+    String uid = _conUserId.text;
     String uname = _conUserName.text;
     String email = _conEmail.text;
     String passwd = _conPassword.text;
@@ -74,7 +94,7 @@ class _ProfileState extends State<Profile> {
   }
 
   delete() async {
-    String delUserID = _conDelLogin.text;
+    String delUserID = _conDelUserId.text;
 
     await dbHelper.deleteUser(delUserID).then((value) {
       if (value == 1) {
@@ -94,12 +114,12 @@ class _ProfileState extends State<Profile> {
     final SharedPreferences sp = await _pref;
 
     if (add) {
-      sp.setString("name", user.name);
+      sp.setString("user_name", user.user_name);
       sp.setString("email", user.email);
       sp.setString("password", user.password);
     } else {
-      sp.remove('login');
-      sp.remove('name');
+      sp.remove('user_id');
+      sp.remove('user_name');
       sp.remove('email');
       sp.remove('password');
     }
@@ -127,7 +147,7 @@ class _ProfileState extends State<Profile> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: getTextFormField(
-                          controller: _conLogin,
+                          controller: _conUserId,
                           isEnable: false,
                           icon: Icons.person,
                           hintName: 'User ID'),
@@ -201,7 +221,7 @@ class _ProfileState extends State<Profile> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: getTextFormField(
-                          controller: _conDelLogin,
+                          controller: _conDelUserId,
                           isEnable: false,
                           icon: Icons.person,
                           hintName: 'User ID'),

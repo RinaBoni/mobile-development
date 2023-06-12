@@ -5,11 +5,26 @@ import 'package:final_task/screens/signup_form.dart';
 import 'package:final_task/screens/profile.dart';
 import 'package:final_task/screens/home_screen.dart';
 import 'package:final_task/screens/data_from_iot.dart';
+import 'package:toast/toast.dart';
+
+
+// class ToastContext {
+//   late BuildContext context;
+//
+//   void init(BuildContext appContext) {
+//     context = appContext;
+//   }
+// }
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  //final toastContext = ToastContext();
+  //toastContext.init(context);
+  //ToastContext().init(context);
 
   runApp(MaterialApp(
+
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {

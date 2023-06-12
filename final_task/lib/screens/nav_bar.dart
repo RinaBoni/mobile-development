@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import '/theme/my_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:final_task/theme/my_theme.dart';
 
 
 class NavBar extends StatelessWidget {

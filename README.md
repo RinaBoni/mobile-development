@@ -2,44 +2,9 @@
 
 [сайт с уроками по flutter](https://flutter.su/tutorial)
 
-## task
-
-Папка, в которой лежат лекции (вроде это лекции)
-
-## introduction to widgets - введение в виджеты
-
-Расположить виджеты с названием вашей группы, Фамилии и имени.
-
-## layuot widgets - контейнеры компоновки
-
-Поиграться с расположение виджетов и цветами
-
-## area calculator - форма входа
-
-# Итоговое задание
-
-Итоговое задание по мобильной разработке.
-
-Вам необходимо реализовать приложение по заданию согласно рисунку 1.
-
-![image](https://github.com/RinaBoni/mobile-development-6/assets/83748388/2620129e-cab4-4e8a-8039-89e56f9577f2)
-
-Рисунок 1 – Дизайн приложения.
-Пояснения к заданию:
-
-1. Вам необходимо стилизовать ваш дизайн. Идеи можете взять отсюда
-    * https://vc.ru/design/328418-top-10-idey-ui-dizayna-mobilnyh-prilozheniy-v-2022
-
-    * https://www.uprock.ru/articles/33-resursa-s-luchshimi-ui-patternami-dlya-vashih-proektov
-
-2. Все формы должны иметь валидацию( Поля не должны быть пустыми не должно быть пустым, E-mail должен быть e-mailом, пароль не менее 8 символов с цифрами и буквами нижнего и верхнего регистра, формы – в этом вам помогут регулярные выражения). На схеме это прямоугольники зеленого цвета.
-
-3. Данные о пользователе хранятся в базе данных SQLite.
-
-4. В основном приложении необходимо добавить меню. При нажатиина кнопку калькулятор должно открываться встроенное в телефон приложение калькулятор, либо свой калькулятор.https://www.geeksforgeeks.org/simple-calculator-app-using-flutter/
-
-5. Профиль – это возможность менять данные, которые были забитыпри регистрации.
-
-6. Погода – Выводится информация о текущей погоде за окном. Для получения данных используйте API Weather https://openweathermap.org/api или другой. Инструкция на приложение https://vc.ru/dev/155933-instrukciyakak-sozdat-prilozhenie-dlya-prosmotra-pogody-na-flutter
-
-7. Данные с IoT- дизайн в рисунке 1. В нем вбиваете url, с которого хотите получить данные и параметр, который вы записываете на устройство. Внизу необходимо показать график с получаемыми данными и временными метками. Запрос должен выполняться асинхронно. 
+* Лекции (задания) [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/tasks)
+* Лабараторная 1 [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/introduction_to_widgets)
+* Лабараторная 2 [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/layout_widgets)
+* Лабараторная 3 [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/validation)
+* Лабараторная 4 [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/area_calculator)
+* Итоговое задание [ссылка](https://github.com/RinaBoni/mobile-development-6/tree/main/final_task)
